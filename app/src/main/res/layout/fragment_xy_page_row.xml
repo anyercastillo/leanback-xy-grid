@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.fragment.app.FragmentContainerView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/complex_grid_fragment"
-    android:name="com.example.demo.feature_channels.ChannelsGridFragment"
+    android:name="com.example.demo.feature_xy.XYFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />

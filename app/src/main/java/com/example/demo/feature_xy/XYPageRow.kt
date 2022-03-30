@@ -1,4 +1,4 @@
-package com.example.demo.feature_channels
+package com.example.demo.feature_xy
 
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -11,16 +11,16 @@ import com.example.demo.R
 /**
  * Defines the [PageRow] to be use in [MainFragment]
  */
-class ChannelsGridPageRow : PageRow(HeaderItem(100, "Channels Grid"))
+class XYPageRow : PageRow(HeaderItem(100, "XY Layout"))
 
 /**
  * Provides a Factory for the [BrowseSupportFragment] architecture to
- * create the [ChannelsGridPageRowFragment] and make it available as a row in the list of rows.
+ * create the [XYPageRowFragment] and make it available as a row in the list of rows.
  */
-class GridPageRowFragmentFactory :
-    BrowseSupportFragment.FragmentFactory<ChannelsGridPageRowFragment>() {
-    override fun createFragment(row: Any): ChannelsGridPageRowFragment {
-        return ChannelsGridPageRowFragment()
+class XYPageRowFragmentFactory :
+    BrowseSupportFragment.FragmentFactory<XYPageRowFragment>() {
+    override fun createFragment(row: Any): XYPageRowFragment {
+        return XYPageRowFragment()
     }
 }
 
@@ -28,8 +28,8 @@ class GridPageRowFragmentFactory :
  * Provides an Adapter for the [BrowseSupportFragment] architecture to
  * allow communication between the [BrowseSupportFragment] and the fragment.
  */
-class ChannelsGridPageRowFragmentAdapter(fragment: ChannelsGridPageRowFragment) :
-    BrowseSupportFragment.MainFragmentAdapter<ChannelsGridPageRowFragment>(fragment) {
+class XYPageRowFragmentAdapter(fragment: XYPageRowFragment) :
+    BrowseSupportFragment.MainFragmentAdapter<XYPageRowFragment>(fragment) {
 
     init {
         isScalingEnabled = false
@@ -43,12 +43,12 @@ class ChannelsGridPageRowFragmentAdapter(fragment: ChannelsGridPageRowFragment) 
 }
 
 /**
- * Defines the fragment used as entry point for the Channels Grid feature.
+ * Defines the fragment used as entry point for the feature.
  */
-class ChannelsGridPageRowFragment : Fragment(R.layout.fragment_channels_grid_page_row),
+class XYPageRowFragment : Fragment(R.layout.fragment_xy_page_row),
     BrowseSupportFragment.MainFragmentAdapterProvider {
 
-    private val fragmentAdapter by lazy { ChannelsGridPageRowFragmentAdapter(this) }
+    private val fragmentAdapter by lazy { XYPageRowFragmentAdapter(this) }
 
     override fun getMainFragmentAdapter(): BrowseSupportFragment.MainFragmentAdapter<*> {
         return fragmentAdapter

@@ -19,8 +19,8 @@ import androidx.leanback.widget.*
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
-import com.example.demo.feature_channels.ChannelsGridPageRow
-import com.example.demo.feature_channels.GridPageRowFragmentFactory
+import com.example.demo.feature_xy.XYPageRow
+import com.example.demo.feature_xy.XYPageRowFragmentFactory
 import java.util.*
 
 /**
@@ -49,8 +49,8 @@ class MainFragment : BrowseSupportFragment() {
      */
     private fun registerPageRows() {
         mainFragmentRegistry.registerFragment(
-            ChannelsGridPageRow::class.java,
-            GridPageRowFragmentFactory()
+            XYPageRow::class.java,
+            XYPageRowFragmentFactory()
         )
     }
     // End Complex grid
@@ -104,7 +104,7 @@ class MainFragment : BrowseSupportFragment() {
         val rowsAdapter = ArrayObjectAdapter(ListRowPresenter())
 
         // Complex grid
-        rowsAdapter.add(ChannelsGridPageRow())
+        rowsAdapter.add(XYPageRow())
         // End Complex grid
 
         val cardPresenter = CardPresenter()
