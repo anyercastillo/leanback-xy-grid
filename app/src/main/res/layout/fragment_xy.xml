@@ -39,7 +39,7 @@
         app:layout_constraintTop_toTopOf="@+id/xy_card"
         app:layout_constraintVertical_bias="0.493" />
 
-    <com.example.demo.feature_xy.views.FooHorizontalGridView
+    <androidx.leanback.widget.HorizontalGridView
         android:id="@+id/xy_after_x"
         android:layout_width="0dp"
         android:layout_height="50dp"
