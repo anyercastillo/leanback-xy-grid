@@ -18,12 +18,6 @@ abstract class AddRemoveItemAnimator : DefaultItemAnimator() {
     private val pendingRemovals = ArrayList<RecyclerView.ViewHolder>()
     private val pendingAdds = ArrayList<RecyclerView.ViewHolder>()
 
-    init {
-        changeDuration = 0
-        removeDuration = moveDuration
-        addDuration = moveDuration
-    }
-
     abstract fun resolveRemoveAnimator(view: View): ViewPropertyAnimator
     abstract fun resolveAddAnimator(view: View): ViewPropertyAnimator
 
