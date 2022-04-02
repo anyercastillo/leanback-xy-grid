@@ -5,13 +5,17 @@ package com.example.demo.feature_xy.utils
  *
  */
 class PivotList<T>(
-    private val list: List<T>
+    private val list: List<T>,
+    private val onDataChangedListener: (
+        before: List<T>,
+        pivot: T,
+        after: List<T>
+    ) -> Unit = { _, _, _ -> }
 ) {
     init {
         if (list.isEmpty()) throw Exception("List cannot be empty.")
     }
 
-    private var onDataChangedListener: () -> Unit = {}
     private var pivotIndex = 0
 
     /**
@@ -56,13 +60,6 @@ class PivotList<T>(
         get() = list[pivotIndex]
 
     /**
-     * Notifies about a change in this object.
-     */
-    fun setOnDataChangeListener(listener: () -> Unit) {
-        onDataChangedListener = listener
-    }
-
-    /**
      * Collects an item from the after-list.
      *
      * If the pivot is at the last position of the list,
@@ -74,7 +71,7 @@ class PivotList<T>(
         if (pivotIndex == list.size - 1) return false
         pivotIndex += 1
 
-        onDataChangedListener.invoke()
+        onDataChangedListener.invoke(before, pivot, after)
 
         return true
     }
@@ -91,7 +88,7 @@ class PivotList<T>(
         if (pivotIndex == 0) return false
         pivotIndex -= 1
 
-        onDataChangedListener.invoke()
+        onDataChangedListener.invoke(before, pivot, after)
 
         return true
     }

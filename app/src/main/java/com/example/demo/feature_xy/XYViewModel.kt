@@ -5,24 +5,29 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.demo.feature_xy.utils.KeyEventHandler
 import com.example.demo.feature_xy.utils.PivotList
+import com.example.demo.network.Channel
+import com.example.demo.network.ChannelRepositoryImpl
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-private val initialXList = listOf("A", "B", "C", "D")
 private val initialYList = listOf("1", "2", "3", "4", "5", "6", "7")
 
-private val initialState = XYState(
+private val initialState = XYState<Channel, String>(
     beforeX = emptyList(),
     afterX = emptyList(),
-    x = "",
+    x = null,
     beforeY = emptyList(),
     afterY = emptyList(),
     y = ""
 )
 
+private val repository = ChannelRepositoryImpl()
+private val keyEventHandler = KeyEventHandler()
+
+
 class XYViewModel : ViewModel() {
-    private val xPivotList = PivotList(initialXList)
+    private val xPivotList = PivotList(emptyList<Channel>())
     private val yPivotList = PivotList(initialYList)
     private val keyEventHandler = KeyEventHandler()
 
@@ -30,12 +35,28 @@ class XYViewModel : ViewModel() {
     val state = _state.asStateFlow()
 
     init {
-        xOnPivotListChanged()
+        viewModelScope.launch {
+            channelsFlow.collect { channels ->
+                val pivotList = PivotList(
+                    list = channels,
+                    onDataChangedListener = { before, pivot, after ->
+                        pivotListXChanged(before, pivot, after)
+                    }
+                )
+
+                val newState = state.value.copy(
+                    isLoading = false,
+                    pivotListX = pivotList
+                )
+                _state.tryEmit(newState)
+            }
+        }
+
         yOnPivotListChanged()
 
         viewModelScope.launch {
             xPivotList.setOnDataChangeListener {
-                xOnPivotListChanged()
+                pivotListXChanged()
             }
         }
 
@@ -43,6 +64,11 @@ class XYViewModel : ViewModel() {
             yPivotList.setOnDataChangeListener {
                 yOnPivotListChanged()
             }
+        }
+
+        viewModelScope.launch {
+            val channels = repository.getChannels()
+
         }
     }
 
@@ -54,11 +80,11 @@ class XYViewModel : ViewModel() {
         )
     }
 
-    private fun xOnPivotListChanged() {
+    private fun pivotListXChanged(before: List<Channel>, pivot: Channel, after: List<Channel>) {
         val newState = state.value.copy(
-            beforeX = xPivotList.before,
-            afterX = xPivotList.after,
-            x = xPivotList.pivot
+            beforeX = before,
+            afterX = after,
+            x = pivot
         )
         _state.tryEmit(newState)
     }

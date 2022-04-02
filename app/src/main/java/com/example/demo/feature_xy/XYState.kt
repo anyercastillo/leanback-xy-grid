@@ -1,5 +1,7 @@
 package com.example.demo.feature_xy
 
+import com.example.demo.feature_xy.utils.PivotList
+
 /**
  * Generic class to host the UI state for:
  * - items of type X on the x-axis,
