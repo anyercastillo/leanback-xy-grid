@@ -104,7 +104,7 @@ abstract class AddRemoveItemAnimator : DefaultItemAnimator() {
      */
     private fun animateAddImpl(holder: RecyclerView.ViewHolder) {
         resolveAddAnimator(holder.itemView)
-            .setDuration(removeDuration)
+            .setDuration(addDuration    )
             .setListener(
                 object : AnimatorListenerAdapter() {
                     override fun onAnimationStart(animator: Animator) {

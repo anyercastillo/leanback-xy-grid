@@ -1,11 +1,12 @@
 package com.example.demo.feature_xy.adapter
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.DiffUtil
+import com.bumptech.glide.Glide
 import com.example.demo.R
 import com.example.demo.network.Channel
 
@@ -20,11 +21,18 @@ class ChannelDiffCallback : DiffUtil.ItemCallback<Channel>() {
 }
 
 class ChannelListViewHolder(val view: View) : XYViewHolder<Channel>(view) {
+    private val imageView = view.findViewById<AppCompatImageView>(R.id.xy_item_y_image)
+    private val textView = view.findViewById<TextView>(R.id.xy_item_y_text)
+
     override fun bindTo(item: Channel) {
-        view.findViewById<TextView>(R.id.xy_item_y_text).apply {
-            text = item.id.toString()
-            setTextColor(Color.WHITE)
+        textView.apply {
+            text = item.channelName
         }
+
+        Glide.with(view.context)
+            .load(item.resolveFilePathSmallLogoUrl())
+            .fitCenter()
+            .into(imageView)
     }
 }
 

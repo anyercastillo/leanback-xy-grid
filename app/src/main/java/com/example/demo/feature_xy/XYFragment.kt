@@ -1,6 +1,7 @@
 package com.example.demo.feature_xy
 
 import HorizontalStackItemAnimator
+import VerticalStackItemAnimator
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -55,7 +56,7 @@ class XYFragment : Fragment(R.layout.fragment_xy) {
         beforeY =
             view.findViewById<ConstraintLayout>(R.id.xy_before_y).findViewById(R.id.xy_item_y_text)
         afterY = view.findViewById(R.id.xy_after_y)
-        afterY.itemAnimator = null// VerticalStackItemAnimator()
+        afterY.itemAnimator = VerticalStackItemAnimator()
         afterY.adapter = ChannelListAdapter()
 
         val card = view.findViewById<ConstraintLayout>(R.id.xy_card)
@@ -98,11 +99,13 @@ class XYFragment : Fragment(R.layout.fragment_xy) {
 
     private fun submitListToVerticalGrid(yList: List<Channel>) {
         val adapter = afterY.adapter as ChannelListAdapter
+        afterY.scrollToPosition(0)
         adapter.submitList(yList)
     }
 
     private fun submitListToHorizontalGrid(xList: List<String>) {
         val adapter = afterX.adapter as XListAdapter
+        afterX.scrollToPosition(0)
         adapter.submitList(xList)
     }
 }

@@ -4,6 +4,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 
+private const val IMAGE_BASE_URL = "https://wwwimage-us.pplusstatic.com/base/"
 data class Channel(
     val id: Int,
     val channelName: String,
@@ -13,6 +14,10 @@ data class Channel(
     val filePathSmallLogoSelected: String
 ) {
     fun listingsFoo() = listOf("1", "2", "3", "4", "5")
+
+    fun resolveFilePathSmallLogoUrl(): String {
+        return IMAGE_BASE_URL + filePathSmallLogo
+    }
 }
 
 data class ChannelsResponse(
