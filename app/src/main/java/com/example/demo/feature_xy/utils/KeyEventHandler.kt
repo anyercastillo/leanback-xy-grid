@@ -2,30 +2,31 @@ package com.example.demo.feature_xy.utils
 
 import android.view.KeyEvent
 
-
 class KeyEventHandler {
     fun onKeyEvent(
         keyEvent: KeyEvent,
-        xPivotList: PivotList<*>,
-        yPivotList: PivotList<*>
+        onPivotListXCollect: () -> Boolean,
+        onPivotListXRollback: () -> Boolean,
+        onPivotListYCollect: () -> Boolean,
+        onPivotListYRollback: () -> Boolean,
     ): Boolean {
         if (keyEvent.action != KeyEvent.ACTION_DOWN) return false
 
         return when (keyEvent.keyCode) {
             KeyEvent.KEYCODE_DPAD_RIGHT -> {
-                xPivotList.collect()
+                onPivotListXCollect()
             }
 
             KeyEvent.KEYCODE_DPAD_LEFT -> {
-                xPivotList.rollback()
+                onPivotListXRollback()
             }
 
             KeyEvent.KEYCODE_DPAD_DOWN -> {
-                yPivotList.collect()
+                onPivotListYCollect()
             }
 
             KeyEvent.KEYCODE_DPAD_UP -> {
-                yPivotList.rollback()
+                onPivotListYRollback()
             }
 
             else -> false

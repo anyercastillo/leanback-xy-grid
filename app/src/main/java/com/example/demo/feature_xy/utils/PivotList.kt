@@ -6,11 +6,6 @@ package com.example.demo.feature_xy.utils
  */
 class PivotList<T>(
     private val list: List<T>,
-    private val onDataChangedListener: (
-        before: List<T>,
-        pivot: T,
-        after: List<T>
-    ) -> Unit = { _, _, _ -> }
 ) {
     init {
         if (list.isEmpty()) throw Exception("List cannot be empty.")
@@ -71,8 +66,6 @@ class PivotList<T>(
         if (pivotIndex == list.size - 1) return false
         pivotIndex += 1
 
-        onDataChangedListener.invoke(before, pivot, after)
-
         return true
     }
 
@@ -87,8 +80,6 @@ class PivotList<T>(
     fun rollback(): Boolean {
         if (pivotIndex == 0) return false
         pivotIndex -= 1
-
-        onDataChangedListener.invoke(before, pivot, after)
 
         return true
     }

@@ -10,7 +10,7 @@
         <entry key="app/src/main/res/layout/fragment_complex_grid.xml" value="0.1828774062816616" />
         <entry key="app/src/main/res/layout/fragment_complex_grid_page_row.xml" value="0.1828774062816616" />
         <entry key="app/src/main/res/layout/fragment_grid_page_row.xml" value="0.1828774062816616" />
-        <entry key="app/src/main/res/layout/fragment_xy.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_xy.xml" value="0.16945288753799392" />
         <entry key="app/src/main/res/layout/fragment_xy_card.xml" value="0.16305329719963865" />
         <entry key="app/src/main/res/layout/fragment_xy_card2.xml" value="0.16305329719963865" />
         <entry key="app/src/main/res/layout/fragment_xy_item_x.xml" value="0.1" />
@@ -19,7 +19,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

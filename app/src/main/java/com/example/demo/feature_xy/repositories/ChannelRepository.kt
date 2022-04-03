@@ -5,4 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface ChannelRepository {
     fun getChannels(): Flow<List<Channel>>
+    fun getListings(channel: Channel): List<String>
 }

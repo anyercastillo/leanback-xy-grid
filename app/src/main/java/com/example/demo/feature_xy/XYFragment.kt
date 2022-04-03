@@ -1,7 +1,6 @@
 package com.example.demo.feature_xy
 
 import HorizontalStackItemAnimator
-import VerticalStackItemAnimator
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -11,9 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.leanback.widget.HorizontalGridView
 import androidx.leanback.widget.VerticalGridView
 import com.example.demo.R
+import com.example.demo.feature_xy.adapter.ChannelListAdapter
 import com.example.demo.feature_xy.adapter.XListAdapter
-import com.example.demo.feature_xy.adapter.YListAdapter
 import com.example.demo.feature_xy.utils.repeatOnLifecycleStarted
+import com.example.demo.network.Channel
 import kotlinx.coroutines.flow.collectLatest
 
 class XYFragment : Fragment(R.layout.fragment_xy) {
@@ -55,8 +55,8 @@ class XYFragment : Fragment(R.layout.fragment_xy) {
         beforeY =
             view.findViewById<ConstraintLayout>(R.id.xy_before_y).findViewById(R.id.xy_item_y_text)
         afterY = view.findViewById(R.id.xy_after_y)
-        afterY.itemAnimator = VerticalStackItemAnimator()
-        afterY.adapter = YListAdapter()
+        afterY.itemAnimator = null// VerticalStackItemAnimator()
+        afterY.adapter = ChannelListAdapter()
 
         val card = view.findViewById<ConstraintLayout>(R.id.xy_card)
         cardX = card.findViewById(R.id.xy_item_x_text)
@@ -78,7 +78,7 @@ class XYFragment : Fragment(R.layout.fragment_xy) {
         }
     }
 
-    private fun renderState(state: XYState<String, String>) {
+    private fun renderState(state: XYState) {
         beforeX.text = state.formattedBeforeX
         beforeY.text = state.formattedBeforeY
         cardX.text = state.formattedCardX
@@ -92,12 +92,12 @@ class XYFragment : Fragment(R.layout.fragment_xy) {
         debugY.text = state.formattedDebugY
         debugAfterY.text = state.formattedDebugYAfter
 
-        submitListToHorizontalGrid(state.afterX)
-        submitListToVerticalGrid(state.afterY)
+        submitListToHorizontalGrid(state.listingAfterList)
+        submitListToVerticalGrid(state.channelAfterList)
     }
 
-    private fun submitListToVerticalGrid(yList: List<String>) {
-        val adapter = afterY.adapter as YListAdapter
+    private fun submitListToVerticalGrid(yList: List<Channel>) {
+        val adapter = afterY.adapter as ChannelListAdapter
         adapter.submitList(yList)
     }
 

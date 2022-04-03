@@ -11,7 +11,9 @@ data class Channel(
     val filePathLogoSelected: String,
     val filePathSmallLogo: String,
     val filePathSmallLogoSelected: String
-)
+) {
+    fun listingsFoo() = listOf("1", "2", "3", "4", "5")
+}
 
 data class ChannelsResponse(
     val channels: List<Channel>

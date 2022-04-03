@@ -8,4 +8,6 @@ class ChannelRepositoryImpl : ChannelRepository {
     override fun getChannels(): Flow<List<Channel>> = flow {
         emit(NetworkData.service.getChannels().channels)
     }
+
+    override fun getListings(channel: Channel): List<String> = listOf("1", "2", "3", "4", "5")
 }
