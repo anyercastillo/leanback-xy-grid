@@ -16,7 +16,7 @@ class ChannelDiffCallback : DiffUtil.ItemCallback<Channel>() {
     }
 
     override fun areContentsTheSame(oldItem: Channel, newItem: Channel): Boolean {
-        return oldItem == newItem
+        return oldItem.id == newItem.id
     }
 }
 
