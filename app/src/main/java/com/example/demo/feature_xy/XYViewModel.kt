@@ -71,7 +71,7 @@ class XYViewModel : ViewModel() {
         val channelPivotList = runningChannelPivotList ?: return
         val channel = channelPivotList.pivot
         val channelId = channel.id
-        val listings = channelPivotList.pivot.listingUrls()
+        val listings = channelPivotList.pivot.listings.map { it.resolveFilePathThumbUrl() }
 
         if (!stateTracker.containsKey(channelId)) {
             stateTracker[channelId] = PivotList(listings)

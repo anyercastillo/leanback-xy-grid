@@ -1,12 +1,14 @@
 package com.example.demo.network
 
+import com.squareup.moshi.Json
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 private const val IMAGE_BASE_URL = "https://wwwimage-us.pplusstatic.com/base/"
 
-data class CurrentListing(
+data class Listing(
     val filePathThumb: String
 ) {
     fun resolveFilePathThumbUrl(): String {
@@ -16,31 +18,24 @@ data class CurrentListing(
 
 data class Channel(
     val id: Int,
+    val slug: String,
     val channelName: String,
     val filePathLogo: String,
     val filePathLogoSelected: String,
     val filePathSmallLogo: String,
     val filePathSmallLogoSelected: String,
-    val currentListing: List<CurrentListing>?
+
+    @Transient
+    val listings: List<Listing>
 ) {
-    fun listingUrls() = listOf(
-        IMAGE_BASE_URL + "files/listings/api-managed/assets/p21498120_i_h8_aa.jpg",
-        IMAGE_BASE_URL + "files/listings/api-managed/assets/p19620924_b_h8_aa.jpg",
-        IMAGE_BASE_URL + "files/listings/api-managed/assets/p19679156_b_h8_aa.jpg",
-        IMAGE_BASE_URL + "files/listings/api-managed/assets/p19679153_b_h8_aa.jpg",
-        IMAGE_BASE_URL + "files/listings/api-managed/assets/p21498120_i_h8_aa.jpg",
-        IMAGE_BASE_URL + "files/listings/api-managed/assets/p21498120_i_h8_aa.jpg",
-        IMAGE_BASE_URL + "files/listings/api-managed/assets/p19620924_b_h8_aa.jpg",
-        IMAGE_BASE_URL + "files/listings/api-managed/assets/p19679156_b_h8_aa.jpg",
-        IMAGE_BASE_URL + "files/listings/api-managed/assets/p19679153_b_h8_aa.jpg",
-        IMAGE_BASE_URL + "files/listings/api-managed/assets/p21498120_i_h8_aa.jpg",
-    )
-
-
     fun resolveFilePathSmallLogoUrl(): String {
         return IMAGE_BASE_URL + filePathSmallLogo
     }
 }
+
+data class ListingsResponse(
+    val listing: List<Listing>
+)
 
 data class ChannelsResponse(
     val channels: List<Channel>
@@ -49,6 +44,9 @@ data class ChannelsResponse(
 interface ParamountService {
     @GET("channels.json?start=0&_clientRegion=US&dma=&showListing=true&stationId=16533&locale=en-us&at=ABCZBVMUfTDEb90Hd2Zr5DHgfd%2FDHM24XsLmjLgCyVdbU7RVhjQpjReMozt3Qbs2q6c%3D")
     suspend fun getChannels(): ChannelsResponse
+
+    @GET("channels/{channelSlug}/listings.json?platformType=apps&start=0&rows=10&locale=en-us&at=ABDyUft4Qomn7voHvc3fnl3rM5HGXzi%2BY8fFbIgyOTM7e4Mkkorag3G2imsB9aEUAkI%3D")
+    suspend fun getListings(@Path("channelSlug") channelSlug: String): ListingsResponse
 }
 
 object NetworkData {
