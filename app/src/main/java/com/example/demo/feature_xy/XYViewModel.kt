@@ -71,9 +71,9 @@ class XYViewModel : ViewModel() {
         val channelPivotList = runningChannelPivotList ?: return
         val channel = channelPivotList.pivot
         val channelId = channel.id
+        val listings = channelPivotList.pivot.listingUrls()
 
         if (!stateTracker.containsKey(channelId)) {
-            val listings = channelPivotList.pivot.listingsFoo()
             stateTracker[channelId] = PivotList(listings)
         }
 

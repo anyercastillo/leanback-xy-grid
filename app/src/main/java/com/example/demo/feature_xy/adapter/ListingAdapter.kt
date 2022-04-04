@@ -4,10 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.DiffUtil
+import com.bumptech.glide.Glide
 import com.example.demo.R
 
-class XDiffCallback : DiffUtil.ItemCallback<String>() {
+class ListingDiffCallback : DiffUtil.ItemCallback<String>() {
     override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
         return oldItem == newItem
     }
@@ -17,17 +19,21 @@ class XDiffCallback : DiffUtil.ItemCallback<String>() {
     }
 }
 
-class XListViewHolder(val view: View) : XYViewHolder<String>(view) {
+class ListingListViewHolder(val view: View) : XYViewHolder<String>(view) {
+    private val imageView = view.findViewById<AppCompatImageView>(R.id.xy_item_x_image)
+
     override fun bindTo(item: String) {
-        view.findViewById<TextView>(R.id.xy_item_x_text).text = item
+        Glide.with(view.context)
+            .load(item)
+            .into(imageView)
     }
 }
 
-class XListAdapter : XYAdapter<String, XListViewHolder>(XDiffCallback()) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): XListViewHolder {
+class ListingListAdapter : XYAdapter<String, ListingListViewHolder>(ListingDiffCallback()) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListingListViewHolder {
         val view = LayoutInflater
             .from(parent.context)
             .inflate(R.layout.fragment_xy_item_x, parent, false)
-        return XListViewHolder(view)
+        return ListingListViewHolder(view)
     }
 }

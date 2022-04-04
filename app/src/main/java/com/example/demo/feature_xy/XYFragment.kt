@@ -1,10 +1,9 @@
 package com.example.demo.feature_xy
 
-import HorizontalStackItemAnimator
-import VerticalStackItemAnimator
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,13 +11,13 @@ import androidx.leanback.widget.HorizontalGridView
 import androidx.leanback.widget.VerticalGridView
 import com.example.demo.R
 import com.example.demo.feature_xy.adapter.ChannelListAdapter
-import com.example.demo.feature_xy.adapter.XListAdapter
+import com.example.demo.feature_xy.adapter.ListingListAdapter
 import com.example.demo.feature_xy.utils.repeatOnLifecycleStarted
 import com.example.demo.network.Channel
 import kotlinx.coroutines.flow.collectLatest
 
 class XYFragment : Fragment(R.layout.fragment_xy) {
-    private lateinit var beforeX: TextView
+    private lateinit var beforeX: AppCompatImageView
     private lateinit var beforeY: TextView
     private lateinit var cardX: TextView
     private lateinit var cardY: TextView
@@ -48,15 +47,15 @@ class XYFragment : Fragment(R.layout.fragment_xy) {
 
     private fun initializeViews(view: View) {
         beforeX =
-            view.findViewById<ConstraintLayout>(R.id.xy_before_x).findViewById(R.id.xy_item_x_text)
+            view.findViewById<ConstraintLayout>(R.id.xy_before_x).findViewById(R.id.xy_item_x_image)
         afterX = view.findViewById(R.id.xy_after_x)
-        afterX.itemAnimator = HorizontalStackItemAnimator()
-        afterX.adapter = XListAdapter()
+        afterX.itemAnimator = null
+        afterX.adapter = ListingListAdapter()
 
         beforeY =
             view.findViewById<ConstraintLayout>(R.id.xy_before_y).findViewById(R.id.xy_item_y_text)
         afterY = view.findViewById(R.id.xy_after_y)
-        afterY.itemAnimator = VerticalStackItemAnimator()
+        afterY.itemAnimator = null
         afterY.adapter = ChannelListAdapter()
 
         val card = view.findViewById<ConstraintLayout>(R.id.xy_card)
@@ -80,7 +79,7 @@ class XYFragment : Fragment(R.layout.fragment_xy) {
     }
 
     private fun renderState(state: XYState) {
-        beforeX.text = state.formattedBeforeX
+//        beforeX.text = state.formattedBeforeX
         beforeY.text = state.formattedBeforeY
         cardX.text = state.formattedCardX
         cardY.text = state.formattedCardY
@@ -104,7 +103,7 @@ class XYFragment : Fragment(R.layout.fragment_xy) {
     }
 
     private fun submitListToHorizontalGrid(xList: List<String>) {
-        val adapter = afterX.adapter as XListAdapter
+        val adapter = afterX.adapter as ListingListAdapter
         afterX.scrollToPosition(0)
         adapter.submitList(xList)
     }

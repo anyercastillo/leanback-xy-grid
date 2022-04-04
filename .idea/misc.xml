@@ -10,11 +10,11 @@
         <entry key="app/src/main/res/layout/fragment_complex_grid.xml" value="0.1828774062816616" />
         <entry key="app/src/main/res/layout/fragment_complex_grid_page_row.xml" value="0.1828774062816616" />
         <entry key="app/src/main/res/layout/fragment_grid_page_row.xml" value="0.1828774062816616" />
-        <entry key="app/src/main/res/layout/fragment_xy.xml" value="0.16945288753799392" />
-        <entry key="app/src/main/res/layout/fragment_xy_card.xml" value="0.16305329719963865" />
+        <entry key="app/src/main/res/layout/fragment_xy.xml" value="0.1453125" />
+        <entry key="app/src/main/res/layout/fragment_xy_card.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_xy_card2.xml" value="0.16305329719963865" />
         <entry key="app/src/main/res/layout/fragment_xy_item_x.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_xy_item_y.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_xy_item_y.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_xy_page_row.xml" value="0.16305329719963865" />
       </map>
     </option>

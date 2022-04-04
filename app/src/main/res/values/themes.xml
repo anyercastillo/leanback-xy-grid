@@ -1,4 +1,12 @@
 <resources>
 
     <style name="Theme.DemoApp" parent="@style/Theme.Leanback" />
+
+    <style name="ChannelTitle" parent="@style/TextAppearance.AppCompat.Body1">
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#C0FFFFFF</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+    </style>
 </resources>

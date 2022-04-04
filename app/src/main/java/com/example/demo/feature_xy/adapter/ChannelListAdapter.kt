@@ -31,7 +31,6 @@ class ChannelListViewHolder(val view: View) : XYViewHolder<Channel>(view) {
 
         Glide.with(view.context)
             .load(item.resolveFilePathSmallLogoUrl())
-            .fitCenter()
             .into(imageView)
     }
 }
