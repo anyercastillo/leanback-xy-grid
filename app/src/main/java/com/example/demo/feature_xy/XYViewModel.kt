@@ -7,16 +7,17 @@ import com.example.demo.feature_xy.utils.KeyEventHandler
 import com.example.demo.feature_xy.utils.PivotList
 import com.example.demo.network.Channel
 import com.example.demo.network.ChannelRepositoryImpl
+import com.example.demo.network.Listing
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 
 private val initialState = XYState(
-    channelBeforeList = emptyList(),
+    channelBefore = null,
     channel = null,
     channelAfterList = emptyList(),
-    listingBeforeList = emptyList(),
+    listingBefore = null,
     listing = null,
     listingAfterList = emptyList()
 )
@@ -28,7 +29,7 @@ class XYViewModel : ViewModel() {
     private var runningChannelPivotList: PivotList<Channel>? = null
 
     // HashMap: Key: Channel.id, Value: PivotList<String>
-    private val stateTracker = HashMap<Int, PivotList<String>>()
+    private val stateTracker = HashMap<Int, PivotList<Listing>>()
 
     private val _state = MutableStateFlow(initialState)
     val state = _state.asStateFlow()
@@ -71,7 +72,7 @@ class XYViewModel : ViewModel() {
         val channelPivotList = runningChannelPivotList ?: return
         val channel = channelPivotList.pivot
         val channelId = channel.id
-        val listings = channelPivotList.pivot.listings.map { it.resolveFilePathThumbUrl() }
+        val listings = channelPivotList.pivot.listings
 
         if (!stateTracker.containsKey(channelId)) {
             stateTracker[channelId] = PivotList(listings)
@@ -80,10 +81,10 @@ class XYViewModel : ViewModel() {
         val listingPivotList = stateTracker[channelId] ?: return
 
         val newState = state.value.copy(
-            channelBeforeList = channelPivotList.before,
+            channelBefore = channelPivotList.before.lastOrNull(),
             channel = channel,
             channelAfterList = channelPivotList.after,
-            listingBeforeList = listingPivotList.before,
+            listingBefore = listingPivotList.before.lastOrNull(),
             listing = listingPivotList.pivot,
             listingAfterList = listingPivotList.after
         )

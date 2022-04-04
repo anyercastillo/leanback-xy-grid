@@ -1,78 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:lb="http://schemas.android.com/tools"
     android:background="#000000"
     android:focusable="true"
     android:focusableInTouchMode="true">
 
-    <include
-        android:id="@+id/xy_card"
-        layout="@layout/fragment_xy_card"
-        android:layout_width="200dp"
-        android:layout_height="150dp"
-        android:layout_marginStart="228dp"
-        android:layout_marginTop="68dp"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/xy_listing_before_image"
+        android:layout_width="@dimen/xy_before_listing_image_width"
+        android:layout_height="@dimen/xy_listing_image_height"
+        android:layout_marginTop="100dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/lb_background" />
 
-    <include
-        android:id="@+id/xy_before_y"
-        layout="@layout/fragment_xy_item_y"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/xy_card"
-        app:layout_constraintEnd_toEndOf="@+id/xy_card"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/xy_before_x" />
-
-    <include
-        android:id="@+id/xy_before_x"
-        layout="@layout/fragment_xy_item_x"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/xy_card"
-        app:layout_constraintEnd_toStartOf="@+id/xy_card"
-        app:layout_constraintTop_toTopOf="@+id/xy_card"
-        app:layout_constraintVertical_bias="0.493" />
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#B3000000"
+        app:layout_constraintBottom_toBottomOf="@+id/xy_listing_before_image"
+        app:layout_constraintEnd_toEndOf="@+id/xy_listing_before_image"
+        app:layout_constraintStart_toStartOf="@+id/xy_listing_before_image"
+        app:layout_constraintTop_toTopOf="@+id/xy_listing_before_image" />
 
     <androidx.leanback.widget.HorizontalGridView
-        android:id="@+id/xy_after_x"
+        android:id="@+id/xy_listings"
         android:layout_width="0dp"
         android:layout_height="100dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="140dp"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        app:layout_constraintBottom_toBottomOf="@+id/xy_card"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/xy_card"
-        app:layout_constraintTop_toTopOf="@+id/xy_card" />
+        app:layout_constraintStart_toEndOf="@+id/xy_listing_before_image"
+        app:layout_constraintTop_toTopOf="@+id/xy_listing_before_image" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:elevation="4dp"
+        android:id="@+id/xy_listing_image"
+        android:layout_width="160dp"
+        android:layout_height="108dp"
+        android:layout_marginStart="140dp"
+        android:src="@drawable/lb_card_foreground"
+        app:layout_constraintBottom_toBottomOf="@+id/xy_listing_before_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/xy_listing_before_image"
+        tools:src="@drawable/lb_background" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/xy_channel_icon"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="64dp"
+        android:src="@drawable/lb_card_foreground"
+        app:layout_constraintBottom_toBottomOf="@+id/xy_listing_before_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/xy_listing_before_image" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/xy_listing_title"
+        style="@style/ChannelTitle.Details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@+id/xy_listing_image"
+        app:layout_constraintTop_toBottomOf="@+id/xy_listing_image"
+        tools:text="Some title goes here" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/xy_listing_description"
+        style="@style/ChannelDescription"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/xy_listing_title"
+        app:layout_constraintTop_toBottomOf="@+id/xy_listing_title"
+        tools:text="Some title goes here" />
 
     <androidx.leanback.widget.VerticalGridView
-        android:id="@+id/xy_after_y"
+        android:id="@+id/xy_channels"
         android:layout_width="400dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="150dp"
         android:focusable="false"
         android:focusableInTouchMode="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/xy_card"
-        app:layout_constraintTop_toBottomOf="@+id/xy_card" />
+        app:layout_constraintStart_toStartOf="@+id/xy_channel_icon"
+        app:layout_constraintTop_toBottomOf="@+id/xy_listing_image" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/xy_channel_before_icon"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/lb_card_foreground"
+        app:layout_constraintBottom_toTopOf="@+id/xy_listing_before_image"
+        app:layout_constraintStart_toStartOf="@+id/xy_channel_icon" />
 
-    <!-- For debug only -->
-    <include
-        android:visibility="gone"
-        android:id="@+id/xy_card2"
-        layout="@layout/fragment_xy_card2"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/xy_channel_before_text"
+        style="@style/ChannelTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="460dp"
-        android:layout_marginTop="216dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginStart="34dp"
+        app:layout_constraintBottom_toBottomOf="@+id/xy_channel_before_icon"
+        app:layout_constraintStart_toEndOf="@+id/xy_channel_before_icon"
+        app:layout_constraintTop_toTopOf="@+id/xy_channel_before_icon"
+        tools:text="Item A" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#99000000"
+        app:layout_constraintBottom_toBottomOf="@+id/xy_channel_before_icon"
+        app:layout_constraintEnd_toEndOf="@+id/xy_channel_before_text"
+        app:layout_constraintStart_toStartOf="@+id/xy_channel_before_icon"
+        app:layout_constraintTop_toTopOf="@+id/xy_channel_before_icon" />
 </androidx.constraintlayout.widget.ConstraintLayout>

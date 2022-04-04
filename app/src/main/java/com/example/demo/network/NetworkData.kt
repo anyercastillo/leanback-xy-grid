@@ -9,6 +9,9 @@ import retrofit2.http.Path
 private const val IMAGE_BASE_URL = "https://wwwimage-us.pplusstatic.com/base/"
 
 data class Listing(
+    val id: Int,
+    val title: String,
+    val description: String,
     val filePathThumb: String
 ) {
     fun resolveFilePathThumbUrl(): String {
@@ -30,6 +33,10 @@ data class Channel(
 ) {
     fun resolveFilePathSmallLogoUrl(): String {
         return IMAGE_BASE_URL + filePathSmallLogo
+    }
+
+    fun resolveFilePathLogoSelectedUrl(): String {
+        return IMAGE_BASE_URL + filePathLogoSelected
     }
 }
 

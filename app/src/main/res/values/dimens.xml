@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="xy_before_listing_image_width">150dp</dimen>
+    <dimen name="xy_listing_image_height">100dp</dimen>
+</resources>

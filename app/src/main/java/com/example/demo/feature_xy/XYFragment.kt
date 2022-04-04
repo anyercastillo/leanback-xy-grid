@@ -2,35 +2,33 @@ package com.example.demo.feature_xy
 
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.leanback.widget.HorizontalGridView
 import androidx.leanback.widget.VerticalGridView
+import com.bumptech.glide.Glide
 import com.example.demo.R
 import com.example.demo.feature_xy.adapter.ChannelListAdapter
 import com.example.demo.feature_xy.adapter.ListingListAdapter
 import com.example.demo.feature_xy.utils.repeatOnLifecycleStarted
 import com.example.demo.network.Channel
+import com.example.demo.network.Listing
 import kotlinx.coroutines.flow.collectLatest
 
 class XYFragment : Fragment(R.layout.fragment_xy) {
-    private lateinit var beforeX: AppCompatImageView
-    private lateinit var beforeY: TextView
-    private lateinit var cardX: TextView
-    private lateinit var cardY: TextView
-    private lateinit var afterY: VerticalGridView
-    private lateinit var afterX: HorizontalGridView
+    private lateinit var listingBeforeImage: AppCompatImageView
+    private lateinit var listings: HorizontalGridView
 
-    private lateinit var debugBeforeX: TextView
-    private lateinit var debugX: TextView
-    private lateinit var debugAfterX: TextView
+    private lateinit var channelIcon: AppCompatImageView
+    private lateinit var listingImage: AppCompatImageView
+    private lateinit var listingTitle: AppCompatTextView
+    private lateinit var listingDescription: AppCompatTextView
 
-    private lateinit var debugBeforeY: TextView
-    private lateinit var debugY: TextView
-    private lateinit var debugAfterY: TextView
+    private lateinit var channelBeforeIcon: AppCompatImageView
+    private lateinit var channelBeforeText: AppCompatTextView
+    private lateinit var channels: VerticalGridView
 
     private val viewModel by viewModels<XYViewModel>()
 
@@ -46,30 +44,23 @@ class XYFragment : Fragment(R.layout.fragment_xy) {
     }
 
     private fun initializeViews(view: View) {
-        beforeX =
-            view.findViewById<ConstraintLayout>(R.id.xy_before_x).findViewById(R.id.xy_item_x_image)
-        afterX = view.findViewById(R.id.xy_after_x)
-        afterX.itemAnimator = null
-        afterX.adapter = ListingListAdapter()
+        listingBeforeImage = view.findViewById(R.id.xy_listing_before_image)
 
-        beforeY =
-            view.findViewById<ConstraintLayout>(R.id.xy_before_y).findViewById(R.id.xy_item_y_text)
-        afterY = view.findViewById(R.id.xy_after_y)
-        afterY.itemAnimator = null
-        afterY.adapter = ChannelListAdapter()
+        listings = view.findViewById(R.id.xy_listings)
+        listings.itemAnimator = null
+        listings.adapter = ListingListAdapter()
 
-        val card = view.findViewById<ConstraintLayout>(R.id.xy_card)
-        cardX = card.findViewById(R.id.xy_item_x_text)
-        cardY = card.findViewById(R.id.xy_item_y_text)
+        channelBeforeIcon = view.findViewById(R.id.xy_channel_before_icon)
+        channelBeforeText = view.findViewById(R.id.xy_channel_before_text)
 
-        val card2 = view.findViewById<ConstraintLayout>(R.id.xy_card2)
-        debugBeforeX = card2.findViewById(R.id.xy_item_x_before)
-        debugX = card2.findViewById(R.id.xy_item_x_pivot)
-        debugAfterX = card2.findViewById(R.id.xy_item_x_after)
+        channels = view.findViewById(R.id.xy_channels)
+        channels.itemAnimator = null
+        channels.adapter = ChannelListAdapter()
 
-        debugBeforeY = card2.findViewById(R.id.xy_item_y_before)
-        debugY = card2.findViewById(R.id.xy_item_y_pivot)
-        debugAfterY = card2.findViewById(R.id.xy_item_y_after)
+        channelIcon = view.findViewById(R.id.xy_channel_icon)
+        listingImage = view.findViewById(R.id.xy_listing_image)
+        listingTitle = view.findViewById(R.id.xy_listing_title)
+        listingDescription = view.findViewById(R.id.xy_listing_description)
     }
 
     private fun setupStateListener() {
@@ -79,32 +70,40 @@ class XYFragment : Fragment(R.layout.fragment_xy) {
     }
 
     private fun renderState(state: XYState) {
-//        beforeX.text = state.formattedBeforeX
-        beforeY.text = state.formattedBeforeY
-        cardX.text = state.formattedCardX
-        cardY.text = state.formattedCardY
+        Glide.with(requireContext())
+            .load(state.beforeListingImage)
+            .into(listingBeforeImage)
 
-        debugBeforeX.text = state.formattedDebugXBefore
-        debugX.text = state.formattedDebugX
-        debugAfterX.text = state.formattedDebugXAfter
+        Glide.with(requireContext())
+            .load(state.beforeChannelIcon)
+            .into(channelBeforeIcon)
+        channelBeforeText.text = state.beforeChannelText
 
-        debugBeforeY.text = state.formattedDebugYBefore
-        debugY.text = state.formattedDebugY
-        debugAfterY.text = state.formattedDebugYAfter
+        Glide.with(requireContext())
+            .load(state.cardIcon)
+            .into(channelIcon)
+
+        Glide.with(requireContext())
+            .load(state.cardImage)
+            .into(listingImage)
+
+        listingTitle.text = state.cardTitle
+        listingDescription.text = state.cardDescription
 
         submitListToHorizontalGrid(state.listingAfterList)
         submitListToVerticalGrid(state.channelAfterList)
     }
 
-    private fun submitListToVerticalGrid(yList: List<Channel>) {
-        val adapter = afterY.adapter as ChannelListAdapter
-        afterY.scrollToPosition(0)
-        adapter.submitList(yList)
+    private fun submitListToHorizontalGrid(list: List<Listing>) {
+        listings.scrollToPosition(0)
+        val adapter = listings.adapter as ListingListAdapter
+        adapter.submitList(list)
     }
 
-    private fun submitListToHorizontalGrid(xList: List<String>) {
-        val adapter = afterX.adapter as ListingListAdapter
-        afterX.scrollToPosition(0)
-        adapter.submitList(xList)
+
+    private fun submitListToVerticalGrid(list: List<Channel>) {
+        channels.scrollToPosition(0)
+        val adapter = channels.adapter as ChannelListAdapter
+        adapter.submitList(list)
     }
 }
