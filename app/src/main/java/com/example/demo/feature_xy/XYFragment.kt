@@ -6,20 +6,16 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.leanback.widget.HorizontalGridView
-import androidx.leanback.widget.VerticalGridView
 import com.bumptech.glide.Glide
 import com.example.demo.R
-import com.example.demo.feature_xy.adapter.ChannelListAdapter
-import com.example.demo.feature_xy.adapter.ListingListAdapter
 import com.example.demo.feature_xy.utils.repeatOnLifecycleStarted
-import com.example.demo.network.Channel
-import com.example.demo.network.Listing
+import com.example.demo.feature_xy.views.ChannelListView
+import com.example.demo.feature_xy.views.ListingListView
 import kotlinx.coroutines.flow.collectLatest
 
 class XYFragment : Fragment(R.layout.fragment_xy) {
     private lateinit var listingBeforeImage: AppCompatImageView
-    private lateinit var listings: HorizontalGridView
+    private lateinit var listings: ListingListView
 
     private lateinit var channelIcon: AppCompatImageView
     private lateinit var listingImage: AppCompatImageView
@@ -28,7 +24,7 @@ class XYFragment : Fragment(R.layout.fragment_xy) {
 
     private lateinit var channelBeforeIcon: AppCompatImageView
     private lateinit var channelBeforeText: AppCompatTextView
-    private lateinit var channels: VerticalGridView
+    private lateinit var channels: ChannelListView
 
     private val viewModel by viewModels<XYViewModel>()
 
@@ -47,15 +43,11 @@ class XYFragment : Fragment(R.layout.fragment_xy) {
         listingBeforeImage = view.findViewById(R.id.xy_listing_before_image)
 
         listings = view.findViewById(R.id.xy_listings)
-        listings.itemAnimator = null
-        listings.adapter = ListingListAdapter()
 
         channelBeforeIcon = view.findViewById(R.id.xy_channel_before_icon)
         channelBeforeText = view.findViewById(R.id.xy_channel_before_text)
 
         channels = view.findViewById(R.id.xy_channels)
-        channels.itemAnimator = null
-        channels.adapter = ChannelListAdapter()
 
         channelIcon = view.findViewById(R.id.xy_channel_icon)
         listingImage = view.findViewById(R.id.xy_listing_image)
@@ -90,20 +82,7 @@ class XYFragment : Fragment(R.layout.fragment_xy) {
         listingTitle.text = state.cardTitle
         listingDescription.text = state.cardDescription
 
-        submitListToHorizontalGrid(state.listingAfterList)
-        submitListToVerticalGrid(state.channelAfterList)
-    }
-
-    private fun submitListToHorizontalGrid(list: List<Listing>) {
-        listings.scrollToPosition(0)
-        val adapter = listings.adapter as ListingListAdapter
-        adapter.submitList(list)
-    }
-
-
-    private fun submitListToVerticalGrid(list: List<Channel>) {
-        channels.scrollToPosition(0)
-        val adapter = channels.adapter as ChannelListAdapter
-        adapter.submitList(list)
+        listings.submitList(state.channel?.channelName, state.listingAfterList)
+        channels.submitList("channels", state.channelAfterList)
     }
 }

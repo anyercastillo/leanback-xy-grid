@@ -1,30 +1,23 @@
-package com.example.demo.feature_xy.adapter
+package com.example.demo.feature_xy.views
 
+import android.content.Context
+import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.recyclerview.widget.DiffUtil
 import com.bumptech.glide.Glide
 import com.example.demo.R
+import com.example.demo.feature_xy.utils.convertDpToPixel
 import com.example.demo.network.Channel
 
-class ChannelDiffCallback : DiffUtil.ItemCallback<Channel>() {
-    override fun areItemsTheSame(oldItem: Channel, newItem: Channel): Boolean {
-        return oldItem.id == newItem.id
-    }
 
-    override fun areContentsTheSame(oldItem: Channel, newItem: Channel): Boolean {
-        return oldItem.id == newItem.id
-    }
-}
-
-class ChannelListViewHolder(val view: View) : XYViewHolder<Channel>(view) {
+class ChannelViewHolder(view: View) : PivotListView.ViewHolder<Channel>(view) {
     private val imageView = view.findViewById<AppCompatImageView>(R.id.xy_item_y_image)
     private val textView = view.findViewById<TextView>(R.id.xy_item_y_text)
 
-    override fun bindTo(item: Channel) {
+    override fun bind(item: Channel) {
         textView.apply {
             text = item.channelName
         }
@@ -35,11 +28,22 @@ class ChannelListViewHolder(val view: View) : XYViewHolder<Channel>(view) {
     }
 }
 
-class ChannelListAdapter : XYAdapter<Channel, ChannelListViewHolder>(ChannelDiffCallback()) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChannelListViewHolder {
+class ChannelListViewHolderFactory : PivotListView.ViewHolderFactory<Channel> {
+    override fun createViewHolder(parent: ViewGroup): PivotListView.ViewHolder<Channel> {
         val view = LayoutInflater
             .from(parent.context)
             .inflate(R.layout.fragment_xy_item_y, parent, false)
-        return ChannelListViewHolder(view)
+
+        return ChannelViewHolder(view)
+
     }
 }
+
+class ChannelListView(
+    ctx: Context,
+    attrs: AttributeSet,
+) : PivotListView<Channel>(ctx, attrs, ChannelListViewHolderFactory()) {
+    override val numberOfViews: Int = 5
+    override val space: Int = ctx.convertDpToPixel(44)
+}
+
